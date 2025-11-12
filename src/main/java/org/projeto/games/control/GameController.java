@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class GameController {
 
@@ -23,6 +24,8 @@ public class GameController {
     public ResponseEntity<List<Game>> getAllGames( @RequestParam(required = false) String genero,
                                                    @RequestParam(required = false) String plataforma,
                                                    @RequestParam(required = false) String nome,
+                                                   @RequestParam(required = false, defaultValue = "false") boolean ordenarPorNomeDesc,
+                                                   @RequestParam(required = false, defaultValue = "false") boolean ordenarPorRatingAsc,
                                                    @RequestParam(required = false, defaultValue = "false") boolean ordenarPorRatingDesc) {
         try {
             Specification<Game> spec = (root, query, cb) -> cb.conjunction();
@@ -42,7 +45,16 @@ public class GameController {
                 spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("plataformas")), plataformaLower));
             }
 
-            Sort sort = ordenarPorRatingDesc ? Sort.by(Sort.Order.desc("rating")) : Sort.unsorted();
+            Sort sort = Sort.by(Sort.Order.asc("nome"));;
+
+            if(ordenarPorRatingDesc){
+                sort  = Sort.by(Sort.Order.desc("rating"));
+            } else if (ordenarPorRatingAsc) {
+                sort = Sort.by(Sort.Order.asc("rating"));
+            } else if (ordenarPorNomeDesc) {
+                sort = Sort.by(Sort.Order.desc("nome"));
+            }
+
             List<Game> lista = rep.findAll(spec, sort);
 
             if (lista.isEmpty()) {
@@ -58,7 +70,7 @@ public class GameController {
     @PostMapping("/")
     public ResponseEntity<Game> createGame(@RequestBody Game ga) {
         try {
-            Game t = rep.save(new Game(ga.getNome(), ga.getGenero(), ga.getPlataformas(), ga.getRating(), ga.getImagemUrl()));
+            Game t = rep.save(new Game(ga.getGenero(), ga.getImagemUrl(), ga.getNome(), ga.getPlataformas(), ga.getRating()));
             return new ResponseEntity<>(t, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
