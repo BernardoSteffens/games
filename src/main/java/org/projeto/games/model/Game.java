@@ -1,6 +1,7 @@
 package org.projeto.games.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "game")
@@ -10,18 +11,26 @@ public class Game {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "O gênero é obrigatório")
+    @Size(max = 30, message = "O gênero deve ter no máximo 30 caracteres")
     @Column(nullable = false, length = 30)
     private String genero;
 
+    @Size(max = 200, message = "A URL da imagem deve ter no máximo 200 caracteres")
     @Column(length = 200)
     private String imagemUrl;
 
+    @NotBlank(message = "O nome é obrigatório")
+    @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
     @Column(nullable = false, length = 100)
     private String nome;
 
+    @Size(max = 150, message = "As plataformas devem ter no máximo 150 caracteres")
     @Column(length = 150)
     private String plataformas;
 
+    @Min(value = 0, message = "O rating mínimo é 0")
+    @Max(value = 100, message = "O rating máximo é 100")
     @Column(nullable = false)
     private int rating;
 

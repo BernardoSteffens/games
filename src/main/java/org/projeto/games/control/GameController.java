@@ -1,5 +1,6 @@
 package org.projeto.games.control;
 
+import jakarta.validation.Valid;
 import org.projeto.games.model.Game;
 import org.projeto.games.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/games")
 @RestController
 public class GameController {
 
@@ -68,9 +70,15 @@ public class GameController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Game> createGame(@RequestBody Game ga) {
+    public ResponseEntity<Game> createGame(@Valid @RequestBody Game ga) {
         try {
-            Game t = rep.save(new Game(ga.getGenero(), ga.getImagemUrl(), ga.getNome(), ga.getPlataformas(), ga.getRating()));
+            Game t = rep.save(new Game(
+                    ga.getGenero(),
+                    ga.getPlataformas(),
+                    ga.getNome(),
+                    ga.getImagemUrl(),
+                    ga.getRating()
+            ));
             return new ResponseEntity<>(t, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -93,7 +101,7 @@ public class GameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Game> updateGame(@PathVariable("id") Long id, @RequestBody Game g){
+    public ResponseEntity<Game> updateGame(@PathVariable("id") Long id, @Valid @RequestBody Game g){
         try {
             Optional<Game> data = rep.findById(id);
 
