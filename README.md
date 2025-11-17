@@ -4,6 +4,14 @@ API desenvolvida para a disciplina de **Desenvolvimento Web** da **Universidade 
 
 ---
 
+## 👥 Autores
+
+* **Bernardo de Macedo Steffens**
+* **Luis Gustavo Vieira Carneiro**
+* **Vinicius Denega D'Alves**
+
+---
+
 ## 📘 Sumário
 
 * [Sobre o Projeto](#-sobre-o-projeto)
@@ -30,39 +38,10 @@ Além disso, oferece suporte a filtros por **gênero**, **plataforma**, **nome**
 
 ## 🛠 Tecnologias Utilizadas
 
-* **Java 17**
-* **Spring Boot** (Web, Validation, JPA)
-* **Banco de Dados**: H2 ou PostgreSQL
+* **Java 21**
+* **Spring Boot** 
+* **Banco de Dados**: PostgreSQL
 * **Maven**
-
----
-
-## 🚀 Como Executar o Projeto
-
-### 1️⃣ Clonar o repositório
-
-```bash
-git clone https://github.com/seu-repositorio/gamehub-api.git
-cd gamehub-api
-```
-
-### 2️⃣ Executar com Maven
-
-```bash
-mvn spring-boot:run
-```
-
-### 3️⃣ Acessar a API
-
-```
-http://localhost:8080/games
-```
-
-Se estiver usando o console do H2:
-
-```
-http://localhost:8080/h2-console
-```
 
 ---
 
@@ -106,15 +85,3 @@ Retorna todos os jogos do gênero *RPG*, ordenados por rating decrescente.
 ### ❌ Deletar jogo (DELETE `/games/1`)
 
 Sem corpo na requisição.
-
----
-
-## 👥 Autores
-
-* **Bernardo de Macedo Steffens**
-* **Luis Gustavo Vieira Carneiro**
-* **Vinicius Denega D'Alves**
-
----
-
-Se quiser, posso também gerar **badges**, adicionar uma **licença**, criar uma **estrutura de pastas**, ou gerar um README ainda mais completo.
